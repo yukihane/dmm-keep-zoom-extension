@@ -22,18 +22,30 @@ const callback = function (mutationsList, observer) {
             renderer[0].querySelector("#viewport0 > canvas"),
             renderer[0].querySelector("#viewport1 > canvas"),
           ];
-          const sizes = canvases.map((e) => [e, e.style.width, e.style.height]);
+          const sizes = canvases.map((e) => [e, e.offsetWidth, e.offsetHeight]);
           sizes.forEach((e) => {
-            const config = { attributes: true, attributeFilter: ["style"] };
+            console.log(e[1]);
+            console.log(e[2]);
             const resizeObserver = new MutationObserver((entries) => {
               for (entry of entries) {
-                  entry.target.style.width = "2560px";
-                  entry.target.style.height = "1762px";
-                console.log(e[1]);
-                console.log(e[2]);
+                chrome.storage.sync.get(
+                  {
+                    enabled: false,
+                    width: "2560px",
+                    height: "1762px",
+                  },
+                  (prefs) => {
+                    console.log(JSON.stringify(prefs));
+                    // entry.target.style.width = "2560px";
+                    // entry.target.style.height = "1762px";
+                  }
+                );
               }
             });
-            resizeObserver.observe(e[0], config);
+            resizeObserver.observe(e[0], {
+              attributes: true,
+              attributeFilter: ["style"],
+            });
           });
         }
       }
