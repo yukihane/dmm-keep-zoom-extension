@@ -1,0 +1,12 @@
+{
+  "name": "DMM Books Keep Zoom",
+  "description": "prevent zoom reset",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": ["https://book.dmm.com/streaming/*"],
+      "js": ["resize.js"]
+    }
+  ]
+}
