@@ -59,15 +59,15 @@ const observer = new MutationObserver(callback);
 // 対象ノードの設定された変更の監視を開始
 observer.observe(targetNode, config);
 
-document.addEventListener("load", () => {
-  const canvas = document.querySelector("#viewport0 > canvas");
-  console.log(!!canvas);
+// document.addEventListener("load", () => {
+//   const canvas = document.querySelector("#viewport0 > canvas");
+//   console.log(!!canvas);
 
-  if (canvas) {
-    const resizeObserver = new ResizeObserver((entries) =>
-      console.log("Body height changed:", entries[0].target.clientHeight)
-    );
+//   if (canvas) {
+//     const resizeObserver = new ResizeObserver((entries) =>
+//       console.log("Body height changed:", entries[0].target.clientHeight)
+//     );
 
-    resizeObserver.observe(canvas);
-  }
-});
+//     resizeObserver.observe(canvas);
+//   }
+// });
