@@ -8,5 +8,9 @@
       "matches": ["https://book.dmm.com/streaming/*"],
       "js": ["resize.js"]
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "prefs.html"
+  },
+  "permissions": ["activeTab", "storage"]
 }

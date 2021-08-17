@@ -1,5 +1,17 @@
 console.log("hello");
 
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message === "obtain-current-value") {
+    const canvas = document.querySelector("#viewport0 > canvas");
+    if (!canvas) {
+      sendResponse(null);
+    } else {
+      console.log("W: " + canvas.clientWidth + ", H: " + canvas.clientHeight);
+      sendResponse({ width: canvas.clientWidth, height: canvas.clientHeight });
+    }
+  }
+});
+
 // 変更を監視するノードを選択
 const targetNode = document.body;
 
