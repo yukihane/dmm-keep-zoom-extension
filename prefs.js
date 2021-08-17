@@ -21,6 +21,8 @@ obtain_current.addEventListener("click", () => {
 save.addEventListener("click", () => {
   chrome.storage.sync.set({
     enabled: enabled.checked,
+    width: width.value,
+    height: height.value,
   });
 });
 
@@ -28,10 +30,13 @@ document.addEventListener("DOMContentLoaded", () => {
   chrome.storage.sync.get(
     {
       enabled: false,
+      width: "",
+      height: "",
     },
     (prefs) => {
-      console.log("prefs.enabled: " + prefs.enables);
       enabled.checked = prefs.enabled;
+      width.value = prefs.width;
+      height.value = prefs.height;
     }
   );
 });

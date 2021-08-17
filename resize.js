@@ -1,5 +1,3 @@
-console.log("hello");
-
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message === "obtain-current-value") {
     const canvas = document.querySelector("#viewport0 > canvas");
@@ -17,6 +15,15 @@ const targetNode = document.body;
 
 // (変更を監視する) オブザーバーのオプション
 const config = { attributes: false, childList: true, subtree: true };
+
+// https://stackoverflow.com/a/175787/4506703 より
+const isNumeric = (str) => {
+  if (typeof str != "string") return false; // we only process strings!
+  return (
+    !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+    !isNaN(parseFloat(str))
+  ); // ...and ensure strings of whitespace fail
+};
 
 // 変更が発見されたときに実行されるコールバック関数
 const callback = function (mutationsList, observer) {
@@ -43,13 +50,21 @@ const callback = function (mutationsList, observer) {
                 chrome.storage.sync.get(
                   {
                     enabled: false,
-                    width: "2560px",
-                    height: "1762px",
+                    width: "",
+                    height: "",
                   },
                   (prefs) => {
                     console.log(JSON.stringify(prefs));
-                    // entry.target.style.width = "2560px";
-                    // entry.target.style.height = "1762px";
+                    if (
+                      prefs.enabled &&
+                      isNumeric(prefs.width) &&
+                      isNumeric(prefs.height)
+                    ) {
+                      entry.target.style.width =
+                        "" + parseInt(prefs.width) + "px";
+                      entry.target.style.height =
+                        "" + parseInt(prefs.height) + "px";
+                    }
                   }
                 );
               }
