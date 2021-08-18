@@ -41,10 +41,10 @@ const callback = function (mutationsList, observer) {
             renderer[0].querySelector("#viewport0 > canvas"),
             renderer[0].querySelector("#viewport1 > canvas"),
           ];
-          const sizes = canvases.map((e) => [e, e.offsetWidth, e.offsetHeight]);
-          sizes.forEach((e) => {
-            console.log(e[1]);
-            console.log(e[2]);
+
+          console.log("c0: " + !!canvases[0] + ", c1: " + !!canvases[1]);
+
+          canvases.forEach((e) => {
             const resizeObserver = new MutationObserver((entries) => {
               for (entry of entries) {
                 chrome.storage.sync.get(
@@ -69,7 +69,7 @@ const callback = function (mutationsList, observer) {
                 );
               }
             });
-            resizeObserver.observe(e[0], {
+            resizeObserver.observe(e, {
               attributes: true,
               attributeFilter: ["style"],
             });
