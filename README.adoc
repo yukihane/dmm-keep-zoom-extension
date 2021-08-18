@@ -1,0 +1,3 @@
+## これは何？
+
+https://book.dmm.com/library/[DMMブックス] のブラウザリーダでページをめくっても倍率がリセットされないように固定するChrome Extensionです。
