@@ -45,29 +45,27 @@ const callback = function (mutationsList, observer) {
           console.log("c0: " + !!canvases[0] + ", c1: " + !!canvases[1]);
 
           canvases.forEach((e) => {
-            const resizeObserver = new MutationObserver((entries) => {
-              for (entry of entries) {
-                chrome.storage.sync.get(
-                  {
-                    enabled: false,
-                    width: "",
-                    height: "",
-                  },
-                  (prefs) => {
-                    console.log(JSON.stringify(prefs));
-                    if (
-                      prefs.enabled &&
-                      isNumeric(prefs.width) &&
-                      isNumeric(prefs.height)
-                    ) {
-                      entry.target.style.width =
-                        "" + parseInt(prefs.width) + "px";
-                      entry.target.style.height =
-                        "" + parseInt(prefs.height) + "px";
-                    }
+            const resizeObserver = new MutationObserver(() => {
+              chrome.storage.sync.get(
+                {
+                  enabled: false,
+                  width: "",
+                  height: "",
+                },
+                (prefs) => {
+                  console.log(JSON.stringify(prefs));
+                  if (
+                    prefs.enabled &&
+                    isNumeric(prefs.width) &&
+                    isNumeric(prefs.height)
+                  ) {
+                    canvases.forEach((c) => {
+                      c.style.width = "" + parseInt(prefs.width) + "px";
+                      c.style.height = "" + parseInt(prefs.height) + "px";
+                    });
                   }
-                );
-              }
+                }
+              );
             });
             resizeObserver.observe(e, {
               attributes: true,
